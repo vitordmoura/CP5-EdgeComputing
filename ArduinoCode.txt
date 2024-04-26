@@ -1,0 +1,41 @@
+#include <ArduinoJson.h> // Inclua a biblioteca ArduinoJson
+
+int cm = 0;
+int triggerPin = 7;
+int echoPin = 8;
+
+long readUltrasonicDistance(int triggerPin, int echoPin)
+{
+  pinMode(triggerPin, OUTPUT);  
+  digitalWrite(triggerPin, LOW);
+  delayMicroseconds(2);
+ 
+  digitalWrite(triggerPin, HIGH);
+  delayMicroseconds(10);
+  digitalWrite(triggerPin, LOW);  
+  pinMode(echoPin, INPUT);
+  
+  return pulseIn(echoPin, HIGH);
+}
+
+void setup()
+{
+  Serial.begin(9600);
+  pinMode(A1, INPUT);
+}
+
+void loop()
+{  
+  cm = 0.01723 * readUltrasonicDistance(triggerPin, echoPin);
+  int valor = analogRead(A1);
+  
+  // Criar um objeto JSON
+  StaticJsonDocument<50> doc;
+  doc["Ultrasonico"] = cm; // Adicionar a variável cm ao JSON
+  doc["LDR"] = valor;
+  // Serializar o objeto JSON para enviar pela porta serial
+  serializeJson(doc, Serial);
+  Serial.println(); // Adicionar uma quebra de linha para separar os dados
+
+  delay(4000); 
+}
