@@ -1,0 +1,258 @@
+[
+    {
+        "id": "fdac0e93d1bb41a5",
+        "type": "tab",
+        "label": "Flow 1",
+        "disabled": false,
+        "info": "",
+        "env": []
+    },
+    {
+        "id": "d1b21a854f55d601",
+        "type": "serial in",
+        "z": "fdac0e93d1bb41a5",
+        "name": "",
+        "serial": "92b776473fab547b",
+        "x": 130,
+        "y": 480,
+        "wires": [
+            [
+                "045342564b911b2a"
+            ]
+        ]
+    },
+    {
+        "id": "045342564b911b2a",
+        "type": "json",
+        "z": "fdac0e93d1bb41a5",
+        "name": "",
+        "property": "payload",
+        "action": "",
+        "pretty": false,
+        "x": 270,
+        "y": 480,
+        "wires": [
+            [
+                "0a61016fe45ea464",
+                "ffd4a8d039fb1a68"
+            ]
+        ]
+    },
+    {
+        "id": "c82bce4884f74e21",
+        "type": "mqtt out",
+        "z": "fdac0e93d1bb41a5",
+        "name": "",
+        "topic": "fiap/iot/1ESPR/1/LDR",
+        "qos": "0",
+        "retain": "",
+        "respTopic": "",
+        "contentType": "",
+        "userProps": "",
+        "correl": "",
+        "expiry": "",
+        "broker": "85efee6b22c2d2c6",
+        "x": 600,
+        "y": 160,
+        "wires": []
+    },
+    {
+        "id": "b44a580d26b96c05",
+        "type": "change",
+        "z": "fdac0e93d1bb41a5",
+        "name": "",
+        "rules": [
+            {
+                "t": "set",
+                "p": "payload",
+                "pt": "msg",
+                "to": "payload.LDR",
+                "tot": "msg"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 400,
+        "y": 280,
+        "wires": [
+            [
+                "51143e3e300b6746"
+            ]
+        ]
+    },
+    {
+        "id": "4d391d1f152db8ab",
+        "type": "change",
+        "z": "fdac0e93d1bb41a5",
+        "name": "",
+        "rules": [
+            {
+                "t": "set",
+                "p": "payload",
+                "pt": "msg",
+                "to": "payload.Ultrasonico",
+                "tot": "msg"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 400,
+        "y": 160,
+        "wires": [
+            [
+                "c82bce4884f74e21"
+            ]
+        ]
+    },
+    {
+        "id": "51143e3e300b6746",
+        "type": "mqtt out",
+        "z": "fdac0e93d1bb41a5",
+        "name": "",
+        "topic": "fiap/iot/1ESPR/1/Ultrasonico",
+        "qos": "0",
+        "retain": "",
+        "respTopic": "",
+        "contentType": "",
+        "userProps": "",
+        "correl": "",
+        "expiry": "",
+        "broker": "85efee6b22c2d2c6",
+        "x": 620,
+        "y": 280,
+        "wires": []
+    },
+    {
+        "id": "0a61016fe45ea464",
+        "type": "function",
+        "z": "fdac0e93d1bb41a5",
+        "name": "function 1",
+        "func": "var currentDate = new Date();\n\nvar B = {\n    payload: {\n        \"variable\": \"Luminosidade\",\n        \"value\": msg.payload.LDR.toString(),\n        \"location\": { \"lat\": -23.57314101879612, \"lng\": -46.62305573863933 }\n    }\n};\nreturn B;",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 420,
+        "y": 440,
+        "wires": [
+            [
+                "7c881966a85eeb52"
+            ]
+        ]
+    },
+    {
+        "id": "7c881966a85eeb52",
+        "type": "mqtt out",
+        "z": "fdac0e93d1bb41a5",
+        "name": "",
+        "topic": "tago/data/post",
+        "qos": "",
+        "retain": "",
+        "respTopic": "",
+        "contentType": "",
+        "userProps": "",
+        "correl": "",
+        "expiry": "",
+        "broker": "85efee6b22c2d2c6",
+        "x": 640,
+        "y": 440,
+        "wires": []
+    },
+    {
+        "id": "634053cd59690b48",
+        "type": "mqtt out",
+        "z": "fdac0e93d1bb41a5",
+        "name": "",
+        "topic": "tago/data/post",
+        "qos": "",
+        "retain": "",
+        "respTopic": "",
+        "contentType": "",
+        "userProps": "",
+        "correl": "",
+        "expiry": "",
+        "broker": "85efee6b22c2d2c6",
+        "x": 640,
+        "y": 520,
+        "wires": []
+    },
+    {
+        "id": "ffd4a8d039fb1a68",
+        "type": "function",
+        "z": "fdac0e93d1bb41a5",
+        "name": "function 2",
+        "func": "var currentDate = new Date();\n\nvar B = {\n    payload: {\n        \"variable\": \"Distancia\",\n        \"value\": msg.payload.Ultrasonico.toString(),\n        \"location\": { \"lat\": -23.57314101879612, \"lng\": -46.62305573863933 }\n    }\n};\nreturn B;",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 420,
+        "y": 520,
+        "wires": [
+            [
+                "634053cd59690b48"
+            ]
+        ]
+    },
+    {
+        "id": "92b776473fab547b",
+        "type": "serial-port",
+        "name": "",
+        "serialport": "COM5",
+        "serialbaud": "9600",
+        "databits": "8",
+        "parity": "none",
+        "stopbits": "1",
+        "waitfor": "",
+        "dtr": "none",
+        "rts": "none",
+        "cts": "none",
+        "dsr": "none",
+        "newline": "\\n",
+        "bin": "false",
+        "out": "char",
+        "addchar": "",
+        "responsetimeout": "10000"
+    },
+    {
+        "id": "85efee6b22c2d2c6",
+        "type": "mqtt-broker",
+        "name": "",
+        "broker": "mqtt.tago.io",
+        "port": "1883",
+        "clientid": "Victor",
+        "autoConnect": true,
+        "usetls": false,
+        "protocolVersion": "4",
+        "keepalive": "60",
+        "cleansession": true,
+        "autoUnsubscribe": true,
+        "birthTopic": "",
+        "birthQos": "0",
+        "birthRetain": "false",
+        "birthPayload": "",
+        "birthMsg": {},
+        "closeTopic": "",
+        "closeQos": "0",
+        "closeRetain": "false",
+        "closePayload": "",
+        "closeMsg": {},
+        "willTopic": "",
+        "willQos": "0",
+        "willRetain": "false",
+        "willPayload": "",
+        "willMsg": {},
+        "userProps": "",
+        "sessionExpiry": ""
+    }
+]
